@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics, status
+from rest_framework import viewsets, generics, status, permissions
 from escola.models import Aluno, Curso, Matricula
 from escola.serializer import (AlunoSerializer, CursoSerializer, MatriculaSerializer,
                                ListaMatriculasAlunoSerializer, ListaAlunosMatriculadosSerializer,
@@ -56,4 +56,13 @@ class ListaAlunosMatriculados(generics.ListAPIView):
         queryset = Matricula.objects.filter(curso_id=self.kwargs['pk'])
         return queryset
     serializer_class = ListaAlunosMatriculadosSerializer
+
+
+class CustomPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'DELETE':
+            return False
+        else:
+            return True
+
 
