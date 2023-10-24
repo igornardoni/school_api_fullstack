@@ -34,8 +34,9 @@ class CursosTestCase(APITestCase):
 
     def test_delete_cursos(self):
         """Teste para verificar a requisição HTTP DELETE -NÃO- permitida, para deletar um curso"""
-        response = self.client.delete('/cursos/1')
+        response = self.client.delete(reverse('Cursos-detail', args=[self.curso_1.pk]))
         self.assertEquals(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
         
 
 

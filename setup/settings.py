@@ -10,9 +10,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.mysite.com'] - Para ambientes de produção.
+ALLOWED_HOSTS = ['*']  # Para testes!
 
 
 # Application definition
@@ -26,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'escola',
-    "corsheaders",
+    'corsheaders',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [

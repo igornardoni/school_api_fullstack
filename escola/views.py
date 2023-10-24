@@ -7,9 +7,19 @@ from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
+
+class CustomPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'DELETE':
+            return False
+        else:
+            return True
+
+
 class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
     queryset = Aluno.objects.all()
+    permission_classes = [CustomPermission]
 
     def get_serializer_class(self):
         if self.request.version == 'v2':
@@ -21,6 +31,7 @@ class CursosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os cursos"""
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+    permission_classes = [CustomPermission]
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -58,11 +69,5 @@ class ListaAlunosMatriculados(generics.ListAPIView):
     serializer_class = ListaAlunosMatriculadosSerializer
 
 
-class CustomPermission(permissions.BasePermission):
-    def has_permission(self, request, view):
-        if request.method == 'DELETE':
-            return False
-        else:
-            return True
 
 
